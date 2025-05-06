@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const port = process.env.PORT || 3001;
-
+const path = require('path')
 const app = express();
 
 app.use(express.json());
@@ -45,3 +45,10 @@ app.post("/create", (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on post ${port}`);
 });
+
+
+//production script
+app.use(express.static("./client/build"))
+app.get("*", (req,res)=>{
+  res.sendFile(path.resolve(__dirname,"client","build","index.html"))
+    })
